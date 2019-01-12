@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<body>
+<iframe id=mplayer width="300" height="300"></iframe>
+<script>
+	var mySpeed = 10;
+	var screenWidth = 1200;
+	var screenHeight = 600;
+	var vx = mySpeed;
+	var vy = mySpeed;
+	var x = 0;
+	var y = 0;
+	var things = ["ZcoqR9Bwx1Y"/*sans*/, "7nQ2oiVqKHw"/*XP*/, "fWY_5Uy7U0U"/*I SAWED THIS BOAT IN HALF*/]//videos/memez
+	var mindex = things[Math.floor(Math.random() * things.length)];
+	document.getElementById("mplayer").src = "https://www.youtube.com/embed/"+mindex+"?autoplay=1&loop=1&playlist="+mindex;
+	window.resizeTo(310,310);
+	function doWindow()
+	{
+		x += vx;
+		y += vy;
+		if(x >= screenWidth || x <= 0)	{	vx *= -1;	}
+		if(y >= screenHeight || y <= 0)	{	vy *= -1;	}
+		window.self.moveTo(x, y);
+	}
+	function doWindow()
+	{
+		x += vx;
+		y += vy;
+		if(x >= screenWidth || x <= 0)	{	vx *= -1;	}
+		if(y >= screenHeight || y <= 0)	{	vy *= -1;	}
+		window.self.moveTo(x, y);
+	}
+	function changedirection()
+	{
+		vx = Math.random()*20;
+		vy = Math.random()*20;
+		if(Math.round(Math.random()) == 0)	{	vx *= -1;	}
+		if(Math.round(Math.random()) == 0)	{	vy *= -1;	}
+	}
+
+setInterval(doWindow, 10);
+setInterval(changedirection, 200);
+</script>
+</body>
+</html>
