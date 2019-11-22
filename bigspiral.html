@@ -1,0 +1,119 @@
+<!DOCTYPE utf-8>
+<html lang="en">
+	<head>
+	</head>
+	<body>
+		<p>Fermat spiral</p>
+		<canvas id="draw" width="1000" height="1000"></canvas>
+		<p id="output1">
+		<p id="output2">
+		<p id="output3">
+		<p id="output4">
+	</body>
+	<script>
+		var canvas = document.getElementById('draw');
+		var ctx = canvas.getContext('2d');
+		class polarPoint
+		{
+			constructor(x, angle)
+			{
+				this.x = x;
+				this.angle = angle;
+			}
+		}
+		class cartPoint
+		{
+			constructor(tpolarPoint)
+			{
+				this.x = tpolarPoint.x*Math.cos(tpolarPoint.angle);
+				this.y = tpolarPoint.x*Math.sin(tpolarPoint.angle);
+			}
+		}
+		var fullCircle = 6.28319;
+		var a = 30; //scale
+		var incr = 0.01; //how small do you want the details? Higher values prevent intersections.
+		var loops = 3000; //The number of loops
+		var xOffSet = 500; //To keep it from being 3/4ths off screen
+		var yOffSet = 500; //Same
+		
+		//Find length of a line
+		function pyth(point1,point2)
+		{
+			var tempPoint = new cartPoint(new polarPoint(0,0)); //Nasty workaround because I'm to lazy to add another constructor to the class cartPoint
+			tempPoint.x = Math.abs(point2.x-point1.x); //Get the horizontal distance between the two points
+			tempPoint.y = Math.abs(point2.y-point1.y); //Get the vertical distance
+			return Math.sqrt((tempPoint.x^2)+(tempPoint.y^2)); //Pythagorean theorem
+		}
+		
+		
+		//Color drawing code
+		var red = 0;
+		var green = 0;
+		var blue = 0;
+		
+		function rgbIncr() //for fun :)
+		{
+			blue++;
+			if(blue>255)
+			{
+				blue = 0;
+				green+=10;
+			}
+			if(green>255)
+			{
+				green = 0;
+				red += 20;
+			}
+			if(red>255)
+			{
+				red = 0;
+				green = 0;
+				blue = 0;
+			}
+			ctx.strokeStyle = 'rgba(' + red.toString(10) + ',' + green.toString(10) + ',' + blue.toString(10) + ',1)';
+		}
+		
+		var points = []; //Polar coordinates go here
+		var cartPoints = []; //Normal, cartesian coordinates go here
+		var distance = 0;
+		
+		//Create the polar spiral coordinates
+		for(var i = 0; i < fullCircle*loops; i += incr)
+		{
+			points.push(new polarPoint(a*Math.sqrt(i),i))
+		}
+		
+		//Convert the points to cartesian coordinates so they can be drawn
+		for(i = 0; i < points.length; i++)
+		{
+			cartPoints[i] = new cartPoint(points[i]);
+		}
+		
+		//loop for drawing all of the points + length calculations
+		for(i = 1; i < cartPoints.length; i++)
+		{
+			ctx.beginPath(); //Start Line drawing
+			ctx.moveTo(cartPoints[i-1].x+xOffSet, cartPoints[i-1].y+yOffSet); //Starting point
+			ctx.lineTo(cartPoints[i].x+xOffSet, cartPoints[i].y+yOffSet); //Ending point
+			ctx.stroke(); //End line drawing
+			distance += pyth(cartPoints[i], cartPoints[i-1]);
+			rgbIncr(); //Change the color
+		}
+		
+		var outerD = 101; //Outer diameter in feet
+		var conv = outerD/(2*a*Math.sqrt(fullCircle));
+		var oldDist = distance;
+		distance *= conv;
+		
+		function out(text, loc)
+		{
+			document.getElementById(loc).appendChild(document.createTextNode(text));
+		}
+		
+		//draw answer
+		out("The distance of one of the spiral's is " + Math.floor(distance) + " feet.", "output1");
+		out("The combined distance of both spirals is " + Math.floor(distance)*2 + " feet.", "output2");
+		out("The distance in pixels is " + oldDist, "output3");
+		out("The conversion from pixels to feet is " + conv, "output4");
+	</script>
+</html>
