@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Prepare for your PC to suffer if you enable pop-ups</p>
+
+<script>
+var mynewwindow;
+var currentWindow;
+var i;
+function createWindow(argX, argY, thing)
+{
+	currentWindow = window.open(thing, "_blank", "width = 400, height= 400");
+	currentWindow.x = argX;
+	currentWindow.y = argY;
+	currentWindow.moveTo(argX, argY);
+}
+for(i = 0; i < 2; i += 1)
+{
+	createWindow(Math.floor(Math.random() * 1000), Math.floor(Math.random() * 1000), "agony.html");
+}
+
+</script>
+
+</body>
+</html>
