@@ -15,10 +15,10 @@ function createWindow(argX, argY, thing)
 	currentWindow.y = argY;
 	currentWindow.moveTo(argX, argY);
 }
-for(i = 0; i < 2; i += 1)
-{
-	createWindow(Math.floor(Math.random() * 1000), Math.floor(Math.random() * 1000), "agony");
-}
+//for(i = 0; i < 2; i += 1)
+//{
+	setInterval(createWindow(Math.floor(Math.random() * 1000), Math.floor(Math.random() * 1000), "agony"), 10);
+//}
 
 </script>
 
