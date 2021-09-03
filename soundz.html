@@ -22,14 +22,6 @@
 		if(y >= screenHeight || y <= 0)	{	vy *= -1;	}
 		window.self.moveTo(x, y);
 	}
-	function doWindow()
-	{
-		x += vx;
-		y += vy;
-		if(x >= screenWidth || x <= 0)	{	vx *= -1;	}
-		if(y >= screenHeight || y <= 0)	{	vy *= -1;	}
-		window.self.moveTo(x, y);
-	}
 	function changedirection()
 	{
 		vx = Math.random()*20;
